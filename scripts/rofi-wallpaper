@@ -4,6 +4,9 @@
 
 set -euo pipefail
 
+# Set PATH to include common directories
+export PATH="/usr/local/bin:/usr/bin:/bin:$PATH"
+
 WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
 WALLS_REPO="https://github.com/nsyout/walls.git"
 WALLS_DIR="$HOME/Pictures/Wallpapers/nsyout-walls"

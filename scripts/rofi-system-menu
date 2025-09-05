@@ -4,7 +4,12 @@
 
 set -euo pipefail
 
+# Set PATH to include common directories
+export PATH="/usr/local/bin:/usr/bin:/bin:$PATH"
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Removed rofi styling variables - using default theme
 
 # Color variables for notifications
 declare -r SUCCESS_COLOR="#66800B"
