@@ -36,4 +36,13 @@ echo "linked: $HOME/.zshrc -> $root_dir/dotfiles/zsh/.zshrc"
 mkdir -p "$HOME/.wallpapers" "$HOME/Screenshots"
 echo "Ensure a wallpaper at: $HOME/.wallpapers/wall.jpg"
 
+echo "Installing system scripts to /usr/local/bin"
+for script in "$root_dir/scripts/rofi-system-menu" "$root_dir/scripts/rofi-wallpaper"; do
+  if [ -f "$script" ]; then
+    sudo cp "$script" /usr/local/bin/
+    sudo chmod +x "/usr/local/bin/$(basename "$script")"
+    echo "installed: $(basename "$script") -> /usr/local/bin/"
+  fi
+done
+
 echo "All set. Start Hyprland (tty: 'Hyprland', or via uwsm)."
