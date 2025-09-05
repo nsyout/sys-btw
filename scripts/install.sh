@@ -31,6 +31,7 @@ PAC_PKGS=(
   rofi swayosd hyprshot satty uwsm wiremix impala
   libnotify go tailscale ufw openssh fail2ban
   imagemagick fd ripgrep fzf duf
+  greetd greetd-tuigreet
 )
 
 # GitHub release packages (pinned versions)
@@ -208,5 +209,25 @@ echo "1. Connect to tailscale: sudo tailscale up"
 echo "2. Configure SSH for tailscale only (see README for details)"
 echo "3. Enable UFW: sudo ufw enable"
 echo "4. Enable SSH: sudo systemctl enable --now sshd"
+
+echo "==> Configuring greetd with autologin"
+sudo systemctl enable greetd
+
+# Configure greetd for autologin to Hyprland
+sudo mkdir -p /etc/greetd
+sudo tee /etc/greetd/config.toml > /dev/null <<EOF
+[terminal]
+vt = 1
+
+[default_session]
+command = "tuigreet --time --remember --remember-user-session --theme 'border=#BC5215;text=#CECDC3;prompt=#BC5215;time=#D0A215;action=#4385BE;button=#BC5215;container=#1C1B1A;input=#403E3C' --greeting 'Welcome to Arch + Hyprland' --cmd Hyprland"
+user = "greeter"
+
+[initial_session]
+command = "Hyprland"
+user = "$USER"
+EOF
+
+echo "Greetd configured with autologin to Hyprland for user: $USER"
 
 echo "==> Done. Run scripts/link.sh to symlink configs."
