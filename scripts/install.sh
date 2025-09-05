@@ -30,6 +30,7 @@ PAC_PKGS=(
   xdg-desktop-portal xdg-desktop-portal-hyprland
   rofi swayosd hyprshot satty uwsm wiremix impala
   libnotify go tailscale ufw openssh fail2ban
+  imagemagick fd ripgrep fzf duf
 )
 
 # GitHub release packages (pinned versions)

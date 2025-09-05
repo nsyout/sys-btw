@@ -72,6 +72,7 @@ exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CUR
 
 ## Keybinds (highlights)
 - Apps: `Super+Enter` Alacritty, `Super+D` Rofi, `Super+E` Yazi, `Super+Ctrl+L` Lock
+- System: `Super+Alt+Space` System Menu, `Super+W` Wallpaper Selector
 - Window: `Super+H/J/K/L` focus, `Super+Shift+H/J/K/L` move, `Super+Ctrl+H/J/K/L` resize
 - Workspaces: `Super+1..9` switch, `Super+Shift+1..9` move
 - Floating: `Super+Space` toggle, `Super+F` fullscreen
@@ -103,15 +104,35 @@ Repo (pacman):
 - grim slurp, playerctl, brightnessctl
 - networkmanager nmtui, bluez bluez-utils bluetuith
 - yazi, btop iotop iftop bandwhich
-- zsh starship, inter-font ttf-iosevkaterm-nerd
+- zsh starship, inter-font ttf-iosevkaterm-nerd ttf-jetbrains-mono
 - noto-fonts noto-fonts-cjk noto-fonts-emoji (international support)  
 - pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber
 - xdg-desktop-portal xdg-desktop-portal-hyprland
 - tailscale ufw openssh fail2ban (security stack)
+- imagemagick fd ripgrep fzf duf (system utilities)
 
 GitHub Releases (pinned versions):
 - bluetuith v0.2.5-rc1 (bluetooth TUI manager)
 - wlogout v1.2.2 (logout menu)
+
+## Rofi System Menus
+
+Inspired by Omarchy's Walker, the setup includes comprehensive Rofi-based system management:
+
+### System Menu (`Super+Alt+Space`)
+- **Appearance & Theming**: Wallpaper selector, display settings, color picker
+- **Power Management**: Lock, suspend, restart, shutdown with confirmation
+- **System Information**: Hardware info, resource monitor, disk usage  
+- **Network & Connectivity**: WiFi management, Tailscale status
+- **File Management**: File browser, search, recent files
+- **Applications**: Quick access to categorized apps
+
+### Wallpaper Selector (`Super+W`)
+- **Local Wallpapers**: Browse ~/Pictures/Wallpapers with preview
+- **nsyout/walls Collection**: Auto-downloads curated wallpaper collection
+- **Categories**: Abstract, minimal, nature, anime, gruvbox, solarized, and more
+- **Random Selection**: Picks random wallpaper from all sources
+- **Instant Preview**: Shows wallpaper info and applies immediately
 
 ## Security Setup
 
