@@ -2,49 +2,16 @@
 /* https://github.com/kepano/flexoki/tree/main/waybar */
 
 * {
-  /* Flexoki Base Colors */
-  --black:       #100f0f;
-  --base-950:    #1c1b1a;
-  --base-900:    #282726;
-  --base-850:    #343331;
-  --base-800:    #403e3c;
-  --base-700:    #575653;
-  --base-600:    #6f6e69;
-  --base-500:    #878580;
-  --base-300:    #b7b5ac;
-  --base-200:    #cecdc3;
-  --base-150:    #dad8ce;
-  --base-100:    #e6e4d9;
-  --base-50:     #f2f0e5;
-  --paper:       #fffcf0;
-
-  /* Flexoki Accent Colors */
-  --red-600:     #af3029;
-  --orange-600:  #bc5215;
-  --yellow-600:  #ad8301;
-  --green-600:   #66800b;
-  --cyan-600:    #24837b;
-  --blue-600:    #205ea6;
-  --purple-600:  #5e409d;
-  --magenta-600: #a02f6f;
-
-  --red-400:     #d14d41;
-  --orange-400:  #da702c;
-  --yellow-400:  #d0a215;
-  --green-400:   #879a39;
-  --cyan-400:    #3aa99f;
-  --blue-400:    #4385be;
-  --purple-400:  #8b7ec8;
-  --magenta-400: #ce5d97;
-
-  /* Typography */
   font-family: "Inter", "Noto Sans", "system-ui", sans-serif;
   font-size: 12px;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
 }
 
 window#waybar {
   background: rgba(28, 27, 26, 0.95);
-  color: var(--base-200);
+  color: #cecdc3;
   border-radius: 0;
   border: none;
   margin: 0;
@@ -52,20 +19,25 @@ window#waybar {
 }
 
 #workspaces button {
-  color: var(--base-300);
+  color: #b7b5ac;
   background: transparent;
   padding: 0 8px;
 }
 
 #workspaces button.focused {
-  background: var(--orange-600);
-  color: var(--paper);
+  background: #bc5215;
+  color: #fffcf0;
+}
+
+#workspaces button:hover {
+  background: #403e3c;
+  color: #e6e4d9;
 }
 
 /* Module styling for better readability */
 #clock, #pulseaudio, #network, #bluetooth, #battery, #tray {
   background: rgba(64, 62, 60, 0.8);
-  color: var(--base-200);
+  color: #cecdc3;
   padding: 4px 12px;
   margin: 0 2px;
   border-radius: 6px;
@@ -74,21 +46,10 @@ window#waybar {
 
 #clock {
   background: rgba(188, 82, 21, 0.8);
-  color: var(--paper);
+  color: #fffcf0;
 }
 
 #pulseaudio:hover, #network:hover, #bluetooth:hover, #battery:hover {
   background: rgba(64, 62, 60, 0.9);
   transition: all 0.3s ease;
 }
-
-#workspaces button:hover {
-  background: var(--base-800);
-  color: var(--base-100);
-}
-
-#tray, #clock, #battery, #network, #pulseaudio, #bluetooth {
-  padding: 0 8px;
-  color: var(--base-200);
-}
-
