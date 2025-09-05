@@ -21,11 +21,15 @@ The script will install `paru` automatically if missing (requires `base-devel` +
 ## Install
 ```bash
 # From the repo root
-bash scripts/install.sh   # installs repo + AUR packages
+bash scripts/install.sh   # installs packages and basic security
 bash scripts/link.sh      # symlinks configs into ~/.config and ~/.zshrc
 
 # Put a wallpaper at:
 cp /path/to/wall.jpg ~/.wallpapers/wall.jpg
+
+# Security setup (after install):
+sudo tailscale up                    # connect to your tailnet
+bash scripts/configure-security.sh  # lock down SSH and firewall
 ```
 
 The install script now includes:
@@ -33,6 +37,7 @@ The install script now includes:
 - Pinned GitHub releases (no AUR dependencies)
 - Service dependency checks (NetworkManager, Bluetooth)
 - BTRFS snapshot creation (if snapper available)
+- Security setup (Tailscale VPN, UFW firewall, SSH hardening)
 
 Recommended services (if not already enabled):
 ```bash
@@ -99,13 +104,32 @@ Repo (pacman):
 - networkmanager nmtui, bluez bluez-utils bluetuith
 - yazi, btop iotop iftop bandwhich
 - zsh starship, inter-font ttf-iosevkaterm-nerd
-- noto-fonts noto-fonts-cjk noto-fonts-emoji (international support)
+- noto-fonts noto-fonts-cjk noto-fonts-emoji (international support)  
 - pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber
 - xdg-desktop-portal xdg-desktop-portal-hyprland
+- tailscale ufw openssh fail2ban (security stack)
 
 GitHub Releases (pinned versions):
 - bluetuith v0.2.5-rc1 (bluetooth TUI manager)
 - wlogout v1.2.2 (logout menu)
+
+## Security Setup
+
+The system includes comprehensive security hardening:
+- **Tailscale VPN**: Zero-config mesh networking for secure remote access
+- **UFW Firewall**: Deny all incoming by default, auto-starts on boot
+- **SSH Hardening**: Key-based auth, modern crypto, tailscale-only access, fail2ban protection
+- **DNS Security**: Cloudflare DNS with DNSSEC and DNS-over-TLS
+- **System Snapshots**: Automatic BTRFS snapshots with cleanup policies
+
+After installation, complete the security setup:
+```bash
+sudo tailscale up                    # Connect to your tailnet
+bash scripts/configure-security.sh  # Apply full security hardening
+bash scripts/setup-pacman-hooks.sh  # Optional: automatic package snapshots
+```
+
+**SECURITY WARNING**: This locks down SSH to tailscale-only access - ensure you can connect via tailscale before applying!
 
 ## Troubleshooting
 - No OSD? Ensure `swayosd-server` is running (it’s autostarted). Try `pkill swayosd-server && swayosd-server --silent &`.

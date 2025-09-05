@@ -29,7 +29,7 @@ PAC_PKGS=(
   pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber
   xdg-desktop-portal xdg-desktop-portal-hyprland
   rofi swayosd hyprshot satty uwsm wiremix impala
-  libnotify go
+  libnotify go tailscale ufw openssh fail2ban
 )
 
 # GitHub release packages (pinned versions)
@@ -106,10 +106,42 @@ install_github_release "wlogout" \
 echo "==> Creating common directories"
 mkdir -p "$HOME/.config" "$HOME/.wallpapers" "$HOME/Screenshots"
 
-# Optional: Create snapshot if snapper is available
+# Configure snapper for automatic snapshots
 if command -v snapper >/dev/null 2>&1; then
-  echo "==> Creating pre-install snapshot"
-  snapper create --description "After sys-btw install" || true
+  echo "==> Configuring snapper for automatic snapshots"
+  
+  # Create snapper config for root filesystem if it doesn't exist
+  if [ ! -f /etc/snapper/configs/root ]; then
+    sudo snapper -c root create-config /
+    echo "Created snapper config for root filesystem"
+  fi
+  
+  # Configure snapper settings for reasonable retention
+  sudo snapper -c root set-config \
+    TIMELINE_CREATE=yes \
+    TIMELINE_CLEANUP=yes \
+    NUMBER_CLEANUP=yes \
+    NUMBER_MIN_AGE=1800 \
+    NUMBER_LIMIT=10 \
+    NUMBER_LIMIT_IMPORTANT=5
+    
+  # Enable automatic timeline snapshots
+  sudo systemctl enable --now snapper-timeline.timer
+  sudo systemctl enable --now snapper-cleanup.timer
+  
+  echo "Enabled automatic timeline snapshots (hourly) and cleanup"
+  
+  # Create installation snapshot
+  sudo snapper -c root create --description "After sys-btw install"
+  echo "Created installation snapshot"
+  
+  # Offer to setup pacman hooks
+  echo ""
+  echo "Optional: Setup automatic snapshots for package operations"
+  echo "This creates pre/post snapshots for every pacman transaction"
+  echo "Run: bash scripts/setup-pacman-hooks.sh"
+else
+  echo "Snapper not available - install 'snapper' package for automatic snapshots"
 fi
 
 echo "==> Checking required services"
@@ -120,5 +152,60 @@ for service in "${services[@]}"; do
     echo "Run: sudo systemctl enable --now $service"
   fi
 done
+
+echo "==> Configuring security services"
+
+# Enable and start tailscale
+if ! systemctl is-enabled tailscaled >/dev/null 2>&1; then
+  echo "Enabling tailscale daemon..."
+  sudo systemctl enable --now tailscaled
+  echo "Run 'sudo tailscale up' to connect to your tailnet"
+fi
+
+# Configure UFW firewall with comprehensive rules
+echo "Setting up UFW firewall..."
+sudo ufw --force reset >/dev/null 2>&1
+
+# Default policies - deny all incoming, allow outgoing
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw default deny forward
+
+# Allow loopback (essential for system operation)
+sudo ufw allow in on lo
+sudo ufw allow out on lo
+
+# Allow DHCP client (for network configuration)
+sudo ufw allow out 67
+sudo ufw allow out 68
+
+# Allow DNS (essential for name resolution)
+sudo ufw allow out 53
+
+# Allow NTP (time synchronization)
+sudo ufw allow out 123
+
+# Enable UFW and set to start on boot
+sudo ufw --force enable
+sudo systemctl enable ufw
+
+echo "UFW firewall configured and enabled with secure defaults:"
+echo "  ✓ Deny all incoming connections"
+echo "  ✓ Allow outgoing connections" 
+echo "  ✓ Allow loopback interface"
+echo "  ✓ Allow essential services (DHCP, DNS, NTP)"
+echo "  ✓ Enabled to start on boot"
+echo ""
+echo "After running 'sudo tailscale up', configure SSH access:"
+echo "  sudo ufw allow in on tailscale0 to any port 22"
+echo "  sudo systemctl enable --now sshd"
+
+# Note about SSH configuration
+echo ""
+echo "SECURITY SETUP REQUIRED:"
+echo "1. Connect to tailscale: sudo tailscale up"  
+echo "2. Configure SSH for tailscale only (see README for details)"
+echo "3. Enable UFW: sudo ufw enable"
+echo "4. Enable SSH: sudo systemctl enable --now sshd"
 
 echo "==> Done. Run scripts/link.sh to symlink configs."

@@ -1,0 +1,108 @@
+# Flexoki Dark theme for Yazi
+# Based on https://github.com/gosxrgxx/flexoki-dark.yazi
+
+[flavor]
+use = "flexoki-dark"
+
+[manager]
+cwd = { fg = "#E6E4D9" }
+
+hovered         = { fg = "#100F0F", bg = "#D0A215" }
+preview_hovered = { underline = true }
+
+find_keyword  = { fg = "#D0A215", italic = true }
+find_position = { fg = "#E6E4D9", bg = "reset", italic = true }
+
+marker_selected = { fg = "#D0A215", bg = "#D0A215" }
+marker_copied   = { fg = "#66800B", bg = "#66800B" }
+marker_cut      = { fg = "#AF3029", bg = "#AF3029" }
+
+tab_active   = { fg = "#100F0F", bg = "#E6E4D9" }
+tab_inactive = { fg = "#CECDC3", bg = "#282726" }
+tab_width    = 1
+
+border_symbol = "│"
+border_style  = { fg = "#343331" }
+
+[status]
+separator_open  = ""
+separator_close = ""
+separator_style = { fg = "#343331", bg = "#343331" }
+
+mode_normal = { fg = "#100F0F", bg = "#E6E4D9", bold = true }
+mode_select = { fg = "#100F0F", bg = "#D0A215", bold = true }
+mode_unset  = { fg = "#100F0F", bg = "#AF3029", bold = true }
+
+progress_label  = { fg = "#FFFFFF", bold = true }
+progress_normal = { fg = "#E6E4D9", bg = "#343331" }
+progress_error  = { fg = "#AF3029", bg = "#343331" }
+
+permissions_t = { fg = "#66800B" }
+permissions_r = { fg = "#D0A215" }
+permissions_w = { fg = "#AF3029" }
+permissions_x = { fg = "#4385BE" }
+permissions_s = { fg = "#A02F6F" }
+
+[select]
+border   = { fg = "#4385BE" }
+active   = { fg = "#E6E4D9" }
+inactive = { fg = "#CECDC3" }
+
+[input]
+border   = { fg = "#4385BE" }
+title    = {}
+value    = {}
+selected = { reversed = true }
+
+[completion]
+border   = { fg = "#4385BE" }
+active   = { bg = "#343331" }
+inactive = {}
+
+[tasks]
+border  = { fg = "#4385BE" }
+title   = {}
+hovered = { underline = true }
+
+[which]
+mask            = { bg = "#1C1B1A" }
+cand            = { fg = "#24837B" }
+rest            = { fg = "#CECDC3" }
+desc            = { fg = "#E6E4D9" }
+separator       = "  "
+separator_style = { fg = "#343331" }
+
+[help]
+on      = { fg = "#E6E4D9" }
+exec    = { fg = "#24837B" }
+desc    = { fg = "#CECDC3" }
+hovered = { bg = "#343331", bold = true }
+footer  = { fg = "#100F0F", bg = "#E6E4D9" }
+
+[filetype]
+rules = [
+	# Images
+	{ mime = "image/*", fg = "#24837B" },
+	
+	# Videos
+	{ mime = "video/*", fg = "#D0A215" },
+	{ mime = "audio/*", fg = "#D0A215" },
+	
+	# Archives
+	{ mime = "application/zip",             fg = "#AF3029" },
+	{ mime = "application/gzip",            fg = "#AF3029" },
+	{ mime = "application/x-tar",           fg = "#AF3029" },
+	{ mime = "application/x-bzip",          fg = "#AF3029" },
+	{ mime = "application/x-bzip2",         fg = "#AF3029" },
+	{ mime = "application/x-7z-compressed", fg = "#AF3029" },
+	{ mime = "application/x-rar",           fg = "#AF3029" },
+	
+	# Documents
+	{ mime = "application/pdf", fg = "#AF3029" },
+	{ mime = "application/msword", fg = "#4385BE" },
+	{ mime = "application/vnd.openxmlformats-officedocument.wordprocessingml.document", fg = "#4385BE" },
+	
+	# Fallback
+	{ name = "*", fg = "#CECDC3" },
+	{ name = "*/", fg = "#4385BE" }
+]

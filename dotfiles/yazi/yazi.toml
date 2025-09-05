@@ -1,3 +1,7 @@
+[manager]
+# Use Flexoki dark theme
+theme = "flexoki-dark"
+
 [opener]
 edit = [{ run = "nvim \"$@\"", block = true }]
 image = [{ run = "imv \"$@\"", orphan = true, desc = "Image Viewer" }]
