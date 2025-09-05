@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Rofi dmenu wrapper with EXPLICIT Flexoki theming
+# This ensures all dmenu calls use the same theme
+
+exec rofi -dmenu \
+    -no-config \
+    -theme ~/.config/rofi/themes/flexoki-dark.rasi \
+    "$@"

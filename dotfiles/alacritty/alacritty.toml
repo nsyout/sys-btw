@@ -7,7 +7,7 @@ decorations = "full"
 opacity = 1.0
 
 [font]
-size = 20.0
+size = 16.0
 
 [font.normal]
 family = "IosevkaTerm Nerd Font"
@@ -29,14 +29,14 @@ style = "Italic"
 # https://github.com/kepano/flexoki/tree/main/alacritty
 
 [colors.primary]
-background = "0x282726"
+background = "0x100F0F"
 foreground = "0xFFFCF0"
 bright_foreground = "0xFFFCF0"
 dim_foreground = "0xFFFCF0"
 
 [colors.cursor]
 cursor = "0xFFFCF0"
-text = "0xFFFCF0"
+text = "0x100F0F"
 
 [colors.normal]
 black = "0x100F0F"

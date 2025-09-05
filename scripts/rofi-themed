@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Unified rofi wrapper that ensures consistent theming across ALL modes
+
+# Build the theme string with all the important settings
+THEME_STR='
+window {
+    width: 800px;
+    height: 450px;
+}
+* {
+    font: "Inter 13";
+}
+element {
+    padding: 8px 12px;
+    spacing: 8px;
+}
+element selected {
+    background-color: #66800B;
+    text-color: #FFFCF0;
+}
+inputbar {
+    padding: 10px;
+}
+prompt {
+    text-color: #BC5215;
+}
+entry {
+    placeholder: "Type to filter...";
+    placeholder-color: #6F6E69;
+}
+listview {
+    lines: 12;
+    scrollbar: true;
+}
+scrollbar {
+    width: 4px;
+    handle-color: #575653;
+    handle-width: 4px;
+}'
+
+# Execute rofi with the theme string AND the theme file
+exec rofi "$@" \
+    -matching fuzzy \
+    -theme /home/nsyout/.config/rofi/themes/flexoki-dark.rasi \
+    -theme-str "$THEME_STR"

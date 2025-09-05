@@ -1,0 +1,10 @@
+[terminal]
+vt = 1
+
+[default_session]
+command = "tuigreet --time --remember --remember-user-session --theme 'border=#343331;text=#CECDC3;prompt=#BC5215;time=#878580;action=#BC5215;button=#4385BE;container=#100F0F;input=#282726;greet=#66800B' --greeting 'Welcome to Arch + Hyprland' --cmd Hyprland"
+user = "greeter"
+
+[initial_session]
+command = "Hyprland"
+user = "nsyout"

@@ -31,7 +31,9 @@ PAC_PKGS=(
   rofi swayosd hyprshot satty uwsm wiremix impala
   libnotify go tailscale ufw openssh fail2ban
   imagemagick fd ripgrep fzf duf
+  chafa ueberzugpp  # Terminal image viewers for wallpaper previews
   greetd greetd-tuigreet
+  tmux cliphist xdg-user-dirs jq
 )
 
 # GitHub release packages (pinned versions)
@@ -77,6 +79,47 @@ install_github_release() {
 echo "==> Installing repo packages via pacman"
 sudo pacman -Syu --needed --noconfirm "${PAC_PKGS[@]}"
 
+# Install paru for AUR packages
+install_paru() {
+  if command -v paru >/dev/null 2>&1; then
+    echo "==> paru already installed, skipping"
+    return 0
+  fi
+  
+  echo "==> Installing paru AUR helper"
+  tmpdir=$(mktemp -d)
+  trap "rm -rf '$tmpdir'" EXIT
+  
+  cd "$tmpdir"
+  git clone https://aur.archlinux.org/paru.git
+  cd paru
+  makepkg -si --noconfirm
+  cd /
+  rm -rf "$tmpdir"
+  
+  echo "==> paru installed successfully"
+}
+
+install_paru
+
+# Install AUR packages
+if command -v paru >/dev/null 2>&1; then
+  echo "==> Installing AUR packages"
+  AUR_PKGS=(
+    waypaper  # GUI wallpaper manager
+    timg      # Terminal image viewer with better Wayland support
+  )
+  
+  for pkg in "${AUR_PKGS[@]}"; do
+    if ! pacman -Q "$pkg" >/dev/null 2>&1; then
+      echo "Installing $pkg from AUR..."
+      paru -S --noconfirm "$pkg"
+    else
+      echo "$pkg already installed"
+    fi
+  done
+fi
+
 echo "==> Installing GitHub release packages"
 
 # Install Go packages
@@ -106,7 +149,24 @@ install_github_release "wlogout" \
   "meson setup build && ninja -C build"
 
 echo "==> Creating common directories"
-mkdir -p "$HOME/.config" "$HOME/.wallpapers" "$HOME/Screenshots"
+mkdir -p "$HOME/.config" "$HOME/.wallpapers" "$HOME/screenshots" "$HOME/wallpapers"
+
+# Configure lowercase XDG directories
+if command -v xdg-user-dirs-update >/dev/null 2>&1; then
+  echo "==> Configuring lowercase user directories"
+  mkdir -p "$HOME/desktop" "$HOME/downloads" "$HOME/documents" "$HOME/pictures" "$HOME/videos" "$HOME/music" "$HOME/templates" "$HOME/public"
+  cat > "$HOME/.config/user-dirs.dirs" << 'EOF'
+XDG_DESKTOP_DIR="$HOME/desktop"
+XDG_DOWNLOAD_DIR="$HOME/downloads"
+XDG_TEMPLATES_DIR="$HOME/templates"
+XDG_PUBLICSHARE_DIR="$HOME/public"
+XDG_DOCUMENTS_DIR="$HOME/documents"
+XDG_MUSIC_DIR="$HOME/music"
+XDG_PICTURES_DIR="$HOME/pictures"
+XDG_VIDEOS_DIR="$HOME/videos"
+EOF
+  xdg-user-dirs-update
+fi
 
 # Configure snapper for automatic snapshots
 if command -v snapper >/dev/null 2>&1; then
@@ -220,7 +280,7 @@ sudo tee /etc/greetd/config.toml > /dev/null <<EOF
 vt = 1
 
 [default_session]
-command = "tuigreet --time --remember --remember-user-session --theme 'border=#BC5215;text=#CECDC3;prompt=#BC5215;time=#D0A215;action=#4385BE;button=#BC5215;container=#1C1B1A;input=#403E3C' --greeting 'Welcome to Arch + Hyprland' --cmd Hyprland"
+command = "tuigreet --time --remember --remember-user-session --theme 'border=#343331;text=#CECDC3;prompt=#BC5215;time=#878580;action=#BC5215;button=#4385BE;container=#100F0F;input=#282726;greet=#66800B' --greeting 'Welcome to Arch + Hyprland' --cmd Hyprland"
 user = "greeter"
 
 [initial_session]

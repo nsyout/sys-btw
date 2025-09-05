@@ -3,6 +3,7 @@ configuration {
   show-icons: true;
   display-drun: "Apps";
   drun-display-format: "{name}";
+  matching: "fuzzy";
 }
 
 @theme "themes/flexoki-dark"

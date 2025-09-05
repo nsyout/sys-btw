@@ -3,7 +3,7 @@
 /* https://stephango.com/flexoki */
 
 * {
-    font: "Inter 12, Noto Sans 12, sans-serif 12";
+    font: "IosevkaTerm Nerd Font Medium 14";
 
     /* Flexoki Base Colors */
     base-black:    #100F0F;  /* base-1000 */
@@ -51,15 +51,16 @@
 
 window {
     location:           center;
-    width:              480;
+    width:              600;
     background-color:   @bg0;
     border:             1px;
     border-color:       @border-color;
+    border-radius:      8px;
 }
 
 inputbar {
-    spacing:            8px;
-    padding:            8px;
+    spacing:            10px;
+    padding:            12px;
     background-color:   @bg1;
 }
 
@@ -82,14 +83,14 @@ textbox {
 
 listview {
     padding:    4px 0;
-    lines:      8;
+    lines:      10;
     columns:    1;
     fixed-height: false;
 }
 
 element {
-    padding:    8px;
-    spacing:    8px;
+    padding:    10px;
+    spacing:    10px;
 }
 
 element normal normal {
@@ -109,7 +110,7 @@ element alternate active {
 }
 
 element selected {
-    text-color: @base-black;
+    text-color: @paper;
 }
 
 element selected normal, element selected active {

@@ -1,0 +1,31 @@
+# Ghostty Configuration
+
+# Theme
+theme = flexoki-dark
+
+# Font Configuration
+font-family = IosevkaTerm Nerd Font
+font-size = 12
+
+# Window Settings
+window-padding-x = 8
+window-padding-y = 8
+background-opacity = 0.95
+background-blur-radius = 10
+
+# Terminal behavior
+copy-on-select = true
+mouse-scroll-multiplier = 3
+confirm-close-surface = false
+
+# Window decorations
+window-decoration = true
+
+# Keybindings
+keybind = ctrl+shift+c=copy_to_clipboard
+keybind = ctrl+shift+v=paste_from_clipboard
+keybind = ctrl+shift+n=new_window
+keybind = ctrl+shift+t=new_tab
+keybind = ctrl+shift+plus=increase_font_size:1
+keybind = ctrl+shift+minus=decrease_font_size:1
+keybind = ctrl+shift+0=reset_font_size

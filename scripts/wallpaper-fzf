@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+# FZF-based wallpaper selector with chafa image preview
+# TUI wallpaper selector for Hyprland
+
+set -euo pipefail
+
+# Configuration
+WALLPAPER_DIR="$HOME/wallpapers"
+WALLS_DIR="$HOME/wallpapers/nsyout-walls"
+WALLPAPER_DIR_TARGET="$HOME/.wallpapers"
+
+# Check dependencies
+if ! command -v fzf >/dev/null 2>&1; then
+    echo "Error: fzf is not installed"
+    echo "Install with: sudo pacman -S fzf"
+    exit 1
+fi
+
+if ! command -v chafa >/dev/null 2>&1; then
+    echo "Error: chafa is not installed" 
+    echo "Install with: sudo pacman -S chafa"
+    exit 1
+fi
+
+# Function to set wallpaper
+set_wallpaper() {
+    local wallpaper="$1"
+    
+    if [ ! -f "$wallpaper" ]; then
+        echo "Error: File not found: $wallpaper"
+        return 1
+    fi
+    
+    # Get file extension
+    local ext="${wallpaper##*.}"
+    local target="$WALLPAPER_DIR_TARGET/wall.$ext"
+    
+    # Copy wallpaper with proper extension
+    cp "$wallpaper" "$target"
+    
+    # Update hyprpaper config with full path
+    cat > ~/.config/hypr/hyprpaper.conf << EOF
+preload = $target
+wallpaper = ,$target
+EOF
+    
+    # Restart hyprpaper
+    pkill hyprpaper 2>/dev/null || true
+    sleep 0.2
+    hyprpaper &>/dev/null &
+    sleep 0.5
+    
+    notify-send -i emblem-photos "Wallpaper Changed" "$(basename "$wallpaper")" 2>/dev/null || true
+    echo "✓ Wallpaper set: $(basename "$wallpaper")"
+}
+
+# Preview function for fzf
+preview_image() {
+    local file="$1"
+    
+    # Get terminal dimensions for preview
+    local width="${FZF_PREVIEW_COLUMNS:-80}"
+    local height="${FZF_PREVIEW_LINES:-40}"
+    
+    # Display image info
+    echo "File: $(basename "$file")"
+    
+    if [ -f "$file" ]; then
+        # Get image dimensions if identify is available
+        if command -v identify >/dev/null 2>&1; then
+            identify -format "Size: %wx%h | Format: %m\n" "$file" 2>/dev/null || true
+        fi
+        
+        echo "Path: $file"
+        echo "────────────────────────────────"
+        
+        # Display image with chafa
+        # Use symbols format for better compatibility
+        chafa --format=symbols \
+              --size="${width}x$((height-4))" \
+              --colors=256 \
+              "$file" 2>/dev/null || echo "Preview not available"
+    else
+        echo "File not found"
+    fi
+}
+
+# Export the preview function for fzf
+export -f preview_image
+
+# Browse all wallpapers
+browse_all() {
+    local selected
+    selected=$(find "$WALLPAPER_DIR" "$WALLS_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) 2>/dev/null | \
+        fzf --preview='bash -c "preview_image {}"' \
+            --preview-window='right:50%:wrap' \
+            --header="Browse wallpapers (Enter: set, Ctrl-R: shuffle, Esc: cancel)" \
+            --prompt="Wallpaper > " \
+            --bind='ctrl-r:reload(find '"$WALLPAPER_DIR"' '"$WALLS_DIR"' -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) | shuf)' \
+            --info=inline)
+    
+    if [ -n "$selected" ]; then
+        set_wallpaper "$selected"
+    fi
+}
+
+# Parse arguments
+case "${1:-browse}" in
+    browse|*)
+        browse_all
+        ;;
+esac

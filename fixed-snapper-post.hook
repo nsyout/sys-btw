@@ -1,0 +1,12 @@
+[Trigger]
+Operation = Upgrade
+Operation = Install  
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Creating post-transaction snapshot...
+When = PostTransaction
+Exec = /bin/bash -c 'if [ -f /tmp/snapper-pre-number ]; then /usr/bin/snapper -c root create --type post --pre-number $(cat /tmp/snapper-pre-number) --description "pacman post-transaction"; else /usr/bin/snapper -c root create --type single --description "pacman post-transaction"; fi'
+Depends = snapper

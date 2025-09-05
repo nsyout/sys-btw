@@ -1,0 +1,110 @@
+#!/usr/bin/env bash
+# Flat Rofi System Menu - All options searchable at once with categories
+set -euo pipefail
+
+export PATH="/usr/local/bin:/usr/bin:/bin:$PATH"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Menu items with clear categories
+declare -A menu_items=(
+    # Power
+    ["Power: Lock Screen"]="hyprlock"
+    ["Power: Suspend"]="systemctl suspend"
+    ["Power: Restart"]="systemctl reboot"
+    ["Power: Shutdown"]="systemctl poweroff"
+    ["Power: Log Out"]="hyprctl dispatch exit"
+    
+    # Appearance
+    ["Appearance: Wallpaper"]="$SCRIPT_DIR/rofi-wallpaper"
+    ["Appearance: Color Picker"]="hyprpicker -a"
+    
+    # System
+    ["System: Info"]="alacritty -e fastfetch"
+    ["System: Resource Monitor"]="alacritty -e btop"
+    ["System: Disk Usage"]="alacritty -e duf"
+    
+    # Files
+    ["Files: File Manager"]="alacritty -e yazi"
+    ["Files: Search"]="fd_search"
+    
+    # Network
+    ["Network: WiFi Settings"]="alacritty -e nmtui"
+    ["Network: Tailscale Status"]="tailscale_status"
+    
+    # Hardware
+    ["Hardware: Audio Settings"]="pavucontrol"
+    ["Hardware: Bluetooth"]="blueman-manager"
+    ["Hardware: Display Settings"]="arandr"
+)
+
+# Function to show confirmation dialog
+confirm_action() {
+    local prompt="$1"
+    echo -e "Yes\nNo" | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -p "$prompt"
+}
+
+# File search function
+fd_search() {
+    local query
+    query=$(/home/nsyout/sys-btw/scripts/rofi-themed -dmenu -p "Search for file:")
+    if [ -n "$query" ]; then
+        local result
+        result=$(fd "$query" ~ | head -20 | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -p "Select file:")
+        if [ -n "$result" ] && [ -f "$result" ]; then
+            xdg-open "$result" &
+        fi
+    fi
+}
+
+# Tailscale status function
+tailscale_status() {
+    if command -v tailscale >/dev/null 2>&1; then
+        local status
+        status=$(tailscale status 2>/dev/null || echo "Tailscale not connected")
+        echo "$status" | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -p "Tailscale Status:"
+    else
+        notify-send -u critical "System Menu" "Tailscale not installed"
+    fi
+}
+
+# Show all menu items
+show_menu() {
+    for item in "${!menu_items[@]}"; do
+        echo "$item"
+    done | sort
+}
+
+# Main
+main() {
+    local choice
+    choice=$(show_menu | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -i -p "System:")
+    
+    if [ -n "$choice" ]; then
+        local cmd="${menu_items[$choice]}"
+        
+        # Handle special functions
+        case "$cmd" in
+            "fd_search")
+                fd_search
+                ;;
+            "tailscale_status")
+                tailscale_status
+                ;;
+            *)
+                # Handle dangerous operations with confirmation
+                case "$choice" in
+                    *"Suspend"*|*"Restart"*|*"Shutdown"*|*"Log Out"*)
+                        if [ "$(confirm_action "$choice?")" = "Yes" ]; then
+                            eval "$cmd"
+                        fi
+                        ;;
+                    *)
+                        eval "$cmd &"
+                        ;;
+                esac
+                ;;
+        esac
+    fi
+}
+
+main

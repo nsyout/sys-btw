@@ -4,7 +4,7 @@
 [flavor]
 use = "flexoki-dark"
 
-[mgr]
+[manager]
 cwd = { fg = "#E6E4D9" }
 
 hovered         = { fg = "#100F0F", bg = "#D0A215" }

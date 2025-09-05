@@ -17,3 +17,4 @@ export PATH="$HOME/go/bin:$PATH"
 alias ls='ls --color=auto'
 alias cat='bat --style=plain --paging=never 2>/dev/null || cat'
 
+export YAZI_FILE_ONE="/usr/bin/file"

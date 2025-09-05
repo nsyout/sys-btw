@@ -26,14 +26,16 @@ link_dir "$root_dir/dotfiles/mako"        "$HOME/.config/mako"
 link_dir "$root_dir/dotfiles/rofi"        "$HOME/.config/rofi"
 link_dir "$root_dir/dotfiles/yazi"        "$HOME/.config/yazi"
 link_dir "$root_dir/dotfiles/alacritty"   "$HOME/.config/alacritty"
+link_dir "$root_dir/dotfiles/ghostty"     "$HOME/.config/ghostty"
 link_dir "$root_dir/dotfiles/zathura"     "$HOME/.config/zathura"
+link_dir "$root_dir/dotfiles/tmux"        "$HOME/.config/tmux"
 
 # zsh is a single file
 backup "$HOME/.zshrc"
 ln -sfn "$root_dir/dotfiles/zsh/.zshrc" "$HOME/.zshrc"
 echo "linked: $HOME/.zshrc -> $root_dir/dotfiles/zsh/.zshrc"
 
-mkdir -p "$HOME/.wallpapers" "$HOME/Screenshots"
+mkdir -p "$HOME/.wallpapers" "$HOME/screenshots"
 echo "Ensure a wallpaper at: $HOME/.wallpapers/wall.jpg"
 
 echo "Installing system scripts to /usr/local/bin"

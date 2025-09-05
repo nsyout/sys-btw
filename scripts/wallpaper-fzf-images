@@ -1,0 +1,158 @@
+#!/usr/bin/env bash
+# FZF wallpaper selector with real image previews
+# Uses ueberzugpp for actual images instead of ASCII art
+
+set -euo pipefail
+
+# Configuration
+WALLPAPER_DIR="$HOME/wallpapers"
+WALLS_DIR="$HOME/wallpapers/nsyout-walls"
+WALLPAPER_DIR_TARGET="$HOME/.wallpapers"
+
+# Check dependencies
+if ! command -v fzf >/dev/null 2>&1; then
+    echo "Error: fzf is not installed"
+    exit 1
+fi
+
+# Function to set wallpaper
+set_wallpaper() {
+    local wallpaper="$1"
+    
+    if [ ! -f "$wallpaper" ]; then
+        echo "Error: File not found: $wallpaper"
+        return 1
+    fi
+    
+    # Get file extension
+    local ext="${wallpaper##*.}"
+    local target="$WALLPAPER_DIR_TARGET/wall.$ext"
+    
+    # Copy wallpaper with proper extension
+    cp "$wallpaper" "$target"
+    
+    # Update hyprpaper config with full path
+    cat > ~/.config/hypr/hyprpaper.conf << EOF
+preload = $target
+wallpaper = ,$target
+EOF
+    
+    # Restart hyprpaper
+    pkill hyprpaper 2>/dev/null || true
+    sleep 0.2
+    hyprpaper &>/dev/null &
+    sleep 0.5
+    
+    notify-send -i emblem-photos "Wallpaper Changed" "$(basename "$wallpaper")" 2>/dev/null || true
+    echo "✓ Wallpaper set: $(basename "$wallpaper")"
+}
+
+# Determine best preview method
+preview_image() {
+    local file="$1"
+    
+    echo "File: $(basename "$file")"
+    if [ -f "$file" ]; then
+        if command -v identify >/dev/null 2>&1; then
+            identify -format "Size: %wx%h | Format: %m\n" "$file" 2>/dev/null || true
+        fi
+        echo "Path: $file"
+        echo "────────────────────────────────"
+        
+        # Try different preview methods based on what's available
+        # Check for Kitty or Ghostty terminals which support Kitty graphics protocol
+        if [[ "${TERM:-}" == *"ghostty"* ]] && command -v kitten >/dev/null 2>&1; then
+            # Ghostty terminal with Kitty graphics protocol
+            # Use simpler kitten icat without placement for better compatibility
+            kitten icat --clear --align center "$file"
+        elif [ -n "${KITTY_WINDOW_ID:-}" ] && command -v kitten >/dev/null 2>&1; then
+            # Kitty terminal with icat
+            kitten icat --clear --transfer-mode=memory --place="${FZF_PREVIEW_COLUMNS}x${FZF_PREVIEW_LINES}@0x0" "$file"
+        elif [ -n "${TERM_PROGRAM:-}" ] && [ "$TERM_PROGRAM" = "iTerm.app" ]; then
+            # iTerm2 with imgcat
+            imgcat "$file"
+        elif command -v chafa >/dev/null 2>&1; then
+            # Chafa with better quality settings
+            local width="${FZF_PREVIEW_COLUMNS:-80}"
+            local height="${FZF_PREVIEW_LINES:-40}"
+            
+            # Try sixel if supported
+            if [ -n "${TERM}" ] && [[ "$TERM" == *"sixel"* || "$TERM" == "foot"* || "$TERM" == "xterm-kitty" ]]; then
+                chafa --format=sixels \
+                      --size="${width}x$((height-4))" \
+                      --colors=256 \
+                      "$file" 2>/dev/null || \
+                chafa --size="${width}x$((height-4))" \
+                      --colors=256 \
+                      "$file" 2>/dev/null
+            else
+                # High quality chafa output
+                chafa --size="${width}x$((height-4))" \
+                      --colors=256 \
+                      --dither=ordered \
+                      --color-space=rgb \
+                      "$file" 2>/dev/null
+            fi
+        else
+            echo "Install chafa, timg, or use kitty terminal for image preview"
+        fi
+    fi
+}
+
+export -f preview_image
+
+# Skip ueberzugpp on Wayland since it has positioning issues
+# Use direct terminal preview instead
+if false; then
+    # Create preview script for ueberzugpp
+    preview_with_ueberzug() {
+        export FIFO_UEBERZUG="/tmp/fzf-ueberzug-$$"
+        mkfifo "$FIFO_UEBERZUG"
+        ueberzugpp layer -s <"$FIFO_UEBERZUG" &
+        exec 3>"$FIFO_UEBERZUG"
+        
+        trap "exec 3>&-; rm -f $FIFO_UEBERZUG; kill $! 2>/dev/null" EXIT
+        
+        # Browse with ueberzugpp preview
+        local selected
+        selected=$(find "$WALLPAPER_DIR" "$WALLS_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) 2>/dev/null | \
+            fzf --preview='
+                file={}
+                X=$(($(tput cols) / 2 + 1))
+                Y=1
+                W=$(($(tput cols) / 2 - 2))
+                H=$(($(tput lines) - 4))
+                
+                printf "{\"action\": \"add\", \"identifier\": \"preview\", \"x\": %d, \"y\": %d, \"width\": %d, \"height\": %d, \"path\": \"%s\"}\n" \
+                    $X $Y $W $H "$file" > "$FIFO_UEBERZUG"
+                
+                basename "$file"
+                if command -v identify >/dev/null 2>&1; then
+                    identify -format "Size: %wx%h | %m\n" "$file" 2>/dev/null
+                fi
+            ' \
+            --preview-window='right:50%' \
+            --header="Select wallpaper (Enter: set, Ctrl-R: shuffle)" \
+            --bind='ctrl-r:reload(find '"$WALLPAPER_DIR"' '"$WALLS_DIR"' -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) | shuf)')
+        
+        if [ -n "$selected" ]; then
+            set_wallpaper "$selected"
+        fi
+    }
+    
+    echo "Using ueberzugpp for real image previews..."
+    preview_with_ueberzug
+else
+    # Fallback to text-based preview
+    echo "Using terminal-based image preview..."
+    
+    selected=$(find "$WALLPAPER_DIR" "$WALLS_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) 2>/dev/null | \
+        fzf --preview='bash -c "preview_image {}"' \
+            --preview-window='right:50%:wrap' \
+            --header="Select wallpaper (Enter: set, Ctrl-R: shuffle)" \
+            --bind='ctrl-r:reload(find '"$WALLPAPER_DIR"' '"$WALLS_DIR"' -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) | shuf)')
+    
+    if [ -n "$selected" ]; then
+        set_wallpaper "$selected"
+    fi
+fi

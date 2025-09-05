@@ -1,11 +1,4 @@
 [manager]
-ratio = [1, 3, 4]  # Left, middle, right pane ratio
-sort_by = "natural"
-sort_sensitive = false
-show_hidden = false
-show_symlink = true
-
-[mgr]
 # Use Flexoki dark theme
 theme = "flexoki-dark"
 

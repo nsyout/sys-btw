@@ -1,0 +1,8 @@
+configuration {
+  modi: "dmenu";
+  show-icons: false;
+  font: "Inter 14";
+  terminal: "alacritty";
+}
+
+@theme "themes/flexoki-dark"

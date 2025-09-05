@@ -146,7 +146,7 @@ handle_display_settings() {
         arandr &
     elif command -v xrandr >/dev/null 2>&1; then
         local output
-        output=$(xrandr --listmonitors | rofi -dmenu -p "Select display:")
+        output=$(xrandr --listmonitors | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -p "Select display:")
         if [ -n "$output" ]; then
             notify_info "Display configuration options would go here"
         fi
@@ -178,7 +178,7 @@ handle_lock() {
 
 handle_suspend() {
     local confirm
-    confirm=$(echo -e "Yes\nNo" | rofi -dmenu -p "Suspend system?")
+    confirm=$(echo -e "Yes\nNo" | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -p "Suspend system?")
     if [ "$confirm" = "Yes" ]; then
         systemctl suspend
     fi
@@ -186,7 +186,7 @@ handle_suspend() {
 
 handle_restart() {
     local confirm
-    confirm=$(echo -e "Yes\nNo" | rofi -dmenu -p "Restart system?")
+    confirm=$(echo -e "Yes\nNo" | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -p "Restart system?")
     if [ "$confirm" = "Yes" ]; then
         systemctl reboot
     fi
@@ -194,7 +194,7 @@ handle_restart() {
 
 handle_shutdown() {
     local confirm
-    confirm=$(echo -e "Yes\nNo" | rofi -dmenu -p "Shutdown system?")
+    confirm=$(echo -e "Yes\nNo" | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -p "Shutdown system?")
     if [ "$confirm" = "Yes" ]; then
         systemctl poweroff
     fi
@@ -202,7 +202,7 @@ handle_shutdown() {
 
 handle_logout() {
     local confirm
-    confirm=$(echo -e "Yes\nNo" | rofi -dmenu -p "Log out?")
+    confirm=$(echo -e "Yes\nNo" | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -p "Log out?")
     if [ "$confirm" = "Yes" ]; then
         hyprctl dispatch exit
     fi
@@ -252,7 +252,7 @@ handle_tailscale_status() {
     if command -v tailscale >/dev/null 2>&1; then
         local status
         status=$(tailscale status 2>/dev/null || echo "Tailscale not connected")
-        echo "$status" | rofi -dmenu -p "Tailscale Status:"
+        echo "$status" | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -p "Tailscale Status:"
     else
         notify_error "Tailscale not installed"
     fi
@@ -266,10 +266,10 @@ handle_file_manager() {
 handle_file_search() {
     if command -v fd >/dev/null 2>&1; then
         local query
-        query=$(rofi -dmenu -p "Search for file:")
+        query=$(/home/nsyout/sys-btw/scripts/rofi-themed -dmenu -p "Search for file:")
         if [ -n "$query" ]; then
             local result
-            result=$(fd "$query" ~ | head -20 | rofi -dmenu -p "Select file:")
+            result=$(fd "$query" ~ | head -20 | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -p "Select file:")
             if [ -n "$result" ] && [ -f "$result" ]; then
                 xdg-open "$result" &
             fi
@@ -285,7 +285,7 @@ handle_menu_choice() {
     case "$choice" in
         "Appearance & Theming")
             local subchoice
-            subchoice=$(show_appearance_menu | rofi -dmenu -i -theme ~/.config/rofi/themes/flexoki-dark.rasi -p "Appearance:")
+            subchoice=$(show_appearance_menu | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -i -p "Appearance:")
             case "$subchoice" in
                 "Wallpaper Selector") handle_wallpaper ;;
                 "Display Settings") handle_display_settings ;;
@@ -295,7 +295,7 @@ handle_menu_choice() {
             ;;
         "Power Management")
             local subchoice
-            subchoice=$(show_power_menu | rofi -dmenu -i -theme ~/.config/rofi/themes/flexoki-dark.rasi -p "Power:")
+            subchoice=$(show_power_menu | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -i -p "Power:")
             case "$subchoice" in
                 "Lock Screen") handle_lock ;;
                 "Suspend") handle_suspend ;;
@@ -307,7 +307,7 @@ handle_menu_choice() {
             ;;
         "System Information")
             local subchoice
-            subchoice=$(show_info_menu | rofi -dmenu -i -theme ~/.config/rofi/themes/flexoki-dark.rasi -p "System Info:")
+            subchoice=$(show_info_menu | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -i -p "System Info:")
             case "$subchoice" in
                 "System Information") handle_system_info ;;
                 "Resource Monitor") handle_resource_monitor ;;
@@ -317,7 +317,7 @@ handle_menu_choice() {
             ;;
         "Network & Connectivity")
             local subchoice
-            subchoice=$(show_network_menu | rofi -dmenu -i -theme ~/.config/rofi/themes/flexoki-dark.rasi -p "Network:")
+            subchoice=$(show_network_menu | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -i -p "Network:")
             case "$subchoice" in
                 "WiFi Networks") handle_wifi ;;
                 "Tailscale Status") handle_tailscale_status ;;
@@ -326,7 +326,7 @@ handle_menu_choice() {
             ;;
         "File Management")
             local subchoice
-            subchoice=$(show_file_menu | rofi -dmenu -i -theme ~/.config/rofi/themes/flexoki-dark.rasi -p "Files:")
+            subchoice=$(show_file_menu | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -i -p "Files:")
             case "$subchoice" in
                 "File Manager (Yazi)") handle_file_manager ;;
                 "File Search") handle_file_search ;;
@@ -335,14 +335,14 @@ handle_menu_choice() {
             ;;
         "Help & About")
             echo -e "System Menu v1.0\nRofi-based system management\nInspired by Omarchy Walker\n\nKeybinds:\nSuper+D - App Launcher\nSuper+Alt+Space - System Menu" | \
-                rofi -dmenu -theme ~/.config/rofi/themes/flexoki-dark.rasi -p "About:"
+                /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -p "About:"
             ;;
     esac
 }
 
 main() {
     local choice
-    choice=$(show_main_menu | rofi -dmenu -i -theme ~/.config/rofi/themes/flexoki-dark.rasi -p "System Menu:")
+    choice=$(show_main_menu | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -i -p "System Menu:")
     
     if [ -n "$choice" ]; then
         handle_menu_choice "$choice"
@@ -355,7 +355,7 @@ case "${1:-}" in
         handle_wallpaper
         ;;
     --power)
-        show_power_menu | rofi -dmenu -i -theme ~/.config/rofi/themes/flexoki-dark.rasi -p "Power:"
+        show_power_menu | /home/nsyout/sys-btw/scripts/rofi-themed -dmenu -i -p "Power:"
         ;;
     *)
         main

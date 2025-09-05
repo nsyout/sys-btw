@@ -1,0 +1,4 @@
+#!/bin/bash
+# Store pre-transaction snapshot number for post hook
+PRE_NUMBER=$(/usr/bin/snapper -c root create --type pre --print-number --description "pacman pre-transaction")
+echo "$PRE_NUMBER" > /tmp/snapper-pre-number
