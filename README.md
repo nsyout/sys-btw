@@ -72,8 +72,8 @@ exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CUR
 
 ## Keybinds (highlights)
 - Apps: `Super+Enter` Alacritty, `Super+D` Rofi, `Super+E` Yazi, `Super+Ctrl+L` Lock
-- System: `Super+Alt+Space` System Menu, `Super+W` Wallpaper Selector
-- Window: `Super+H/J/K/L` focus, `Super+Shift+H/J/K/L` move, `Super+Ctrl+H/J/K/L` resize
+- System: `Super+Alt+Space` System Menu
+- Window: `Super+W` close, `Super+H/J/K/L` focus, `Super+Shift+H/J/K/L` move, `Super+Ctrl+H/J/K/L` resize
 - Workspaces: `Super+1..9` switch, `Super+Shift+1..9` move
 - Floating: `Super+Space` toggle, `Super+F` fullscreen
 - Screenshots: `Print`/`Super+P` region→clipboard, `Shift+Print`/`Super+Shift+P` region→`~/Screenshots`
@@ -127,7 +127,7 @@ Inspired by Omarchy's Walker, the setup includes comprehensive Rofi-based system
 - **File Management**: File browser, search, recent files
 - **Applications**: Quick access to categorized apps
 
-### Wallpaper Selector (`Super+W`)
+The wallpaper selector is accessible through the system menu under "Appearance & Theming" → "Wallpaper Selector":
 - **Local Wallpapers**: Browse ~/Pictures/Wallpapers with preview
 - **nsyout/walls Collection**: Auto-downloads curated wallpaper collection
 - **Categories**: Abstract, minimal, nature, anime, gruvbox, solarized, and more
