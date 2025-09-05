@@ -1,0 +1,37 @@
+# Flexoki Dark Theme for Zathura
+# https://stephango.com/flexoki
+# https://github.com/kepano/flexoki/tree/main/zathura
+
+set default-bg              "#100F0F"
+set default-fg              "#CECDC3"
+
+set inputbar-bg             "#1C1B1A"
+set inputbar-fg             "#CECDC3"
+set statusbar-bg            "#1C1B1A"
+set statusbar-fg            "#CECDC3"
+
+set notification-bg         "#1C1B1A"
+set notification-fg         "#CECDC3"
+set notification-error-bg   "#D14D41"
+set notification-error-fg   "#CECDC3"
+set notification-warning-bg "#DA702C"
+set notification-warning-fg "#CECDC3"
+
+set completion-bg           "#1C1B1A"
+set completion-fg           "#878580"
+set completion-highlight-fg "#1C1B1A"
+set completion-highlight-bg "#CECDC3"
+
+set completion-group-bg     "#1C1B1A"
+set completion-group-fg     "#BC5215"
+
+set highlight-color         "#DA702C"
+set highlight-active-color  "#D0A215"
+
+set recolor-lightcolor      "#FFFCF0"
+set recolor-darkcolor       "#100F0F"
+
+# Additional settings for better PDF reading
+set recolor                 "true"
+set recolor-keephue         "true"
+set font                    "Inter 11"

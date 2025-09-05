@@ -26,6 +26,7 @@ link_dir "$root_dir/dotfiles/mako"        "$HOME/.config/mako"
 link_dir "$root_dir/dotfiles/rofi"        "$HOME/.config/rofi"
 link_dir "$root_dir/dotfiles/yazi"        "$HOME/.config/yazi"
 link_dir "$root_dir/dotfiles/alacritty"   "$HOME/.config/alacritty"
+link_dir "$root_dir/dotfiles/zathura"     "$HOME/.config/zathura"
 
 # zsh is a single file
 backup "$HOME/.zshrc"

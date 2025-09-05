@@ -1,7 +1,7 @@
 font=Inter 11, Noto Sans 11, sans-serif 11
-background-color=#1b1e24cc
-text-color=#e5e9f0
-border-color=#3b4252
+background-color=#1C1B1Acc
+text-color=#CECDC3
+border-color=#343331
 border-radius=8
 border-size=1
 default-timeout=5000
@@ -9,4 +9,9 @@ max-visible=6
 anchor=top-right
 margin=10
 padding=10
+
+[urgency=high]
+background-color=#AF3029
+text-color=#FFFCF0
+border-color=#AF3029
 

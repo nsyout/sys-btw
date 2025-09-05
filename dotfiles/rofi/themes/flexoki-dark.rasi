@@ -1,31 +1,130 @@
-/* Minimal dark theme inspired by Flexoki */
+/* ROFI FLEXOKI DARK THEME */
+/* Using official Flexoki color palette */
+/* https://stephango.com/flexoki */
+
 * {
-  accent:               #e6b673;
-  background:           #1a1a1a;
-  background-alt:       #222222;
-  foreground:           #e0e0e0;
-  foreground-dim:       #c8c8c8;
-  border-color:         #343434;
-  selected-background:  #2a2a2a;
-  selected-foreground:  @foreground;
-  urgent:               #e05f5f;
-  font:                 "Inter 12, Noto Sans 12, sans-serif 12";
+    font: "Inter 12, Noto Sans 12, sans-serif 12";
+
+    /* Flexoki Base Colors */
+    base-black:    #100F0F;  /* base-1000 */
+    base-950:      #1C1B1A;  /* main bg */
+    base-900:      #282726;  /* interface bg */
+    base-800:      #343331;  /* borders */
+    base-700:      #403E3C;  /* hover */
+    base-600:      #575653;
+    base-500:      #6F6E69;
+    base-400:      #878580;
+    base-300:      #B7B5AC;  /* text */
+    base-200:      #CECDC3;  /* bright text */
+    base-150:      #DAD8CE;
+    base-100:      #E6E4D9;
+    base-50:       #F2F0E5;
+    paper:         #FFFCF0;
+
+    /* Flexoki Accent Colors (400 level for dark theme) */
+    red-400:       #AF3029;
+    orange-400:    #BC5215;
+    yellow-400:    #D0A215;
+    green-400:     #66800B;
+    cyan-400:      #24837B;
+    blue-400:      #4385BE;
+    purple-400:    #A02F6F;
+    magenta-400:   #CE5D97;
+
+    /* Theme Variables */
+    bg0:               @base-950;
+    bg1:               @base-900;
+    fg0:               @base-200;
+    fg1:               @base-300;
+    
+    accent-color:      @orange-400;
+    urgent-color:      @yellow-400;
+    border-color:      @base-800;
+
+    background-color:  transparent;
+    text-color:        @fg0;
+    
+    margin:     0;
+    padding:    0;
+    spacing:    0;
 }
 
 window {
-  border: 1px;
-  border-color: @border-color;
-  background-color: @background;
+    location:           center;
+    width:              480;
+    background-color:   @bg0;
+    border:             1px;
+    border-color:       @border-color;
 }
 
-mainbox { padding: 10px; }
-inputbar { padding: 6px 8px; background-color: @background-alt; }
-entry    { expand: true; }
-prompt   { margin: 0 6px 0 0; }
-listview { padding: 6px 0; spacing: 4px; }
-element  { padding: 6px 8px; }
-element-text  { foreground: @foreground; }
-element-icon  { size: 18px; }
-element selected { background-color: @selected-background; }
-element urgent   { foreground: @urgent; }
+inputbar {
+    spacing:            8px;
+    padding:            8px;
+    background-color:   @bg1;
+}
+
+prompt, entry, element-icon, element-text {
+    vertical-align: 0.5;
+}
+
+prompt {
+    text-color: @accent-color;
+}
+
+entry {
+    expand: true;
+}
+
+textbox {
+    padding:            8px;
+    background-color:   @bg1;
+}
+
+listview {
+    padding:    4px 0;
+    lines:      8;
+    columns:    1;
+    fixed-height: false;
+}
+
+element {
+    padding:    8px;
+    spacing:    8px;
+}
+
+element normal normal {
+    text-color: @fg0;
+}
+
+element normal urgent {
+    text-color: @urgent-color;
+}
+
+element normal active {
+    text-color: @accent-color;
+}
+
+element alternate active {
+    text-color: @accent-color;
+}
+
+element selected {
+    text-color: @base-black;
+}
+
+element selected normal, element selected active {
+    background-color: @accent-color;
+}
+
+element selected urgent {
+    background-color: @urgent-color;
+}
+
+element-icon {
+    size: 0.8em;
+}
+
+element-text {
+    text-color: inherit;
+}
 

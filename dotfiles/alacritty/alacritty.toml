@@ -21,24 +21,50 @@ style = "Bold"
 family = "IosevkaTerm Nerd Font"
 style = "Italic"
 
-[font.fallback]
-normal = [
-  { family = "JetBrains Mono", style = "Regular" },
-  { family = "Noto Sans Mono", style = "Regular" },
-  { family = "monospace" }
-]
-bold = [
-  { family = "JetBrains Mono", style = "Bold" },
-  { family = "Noto Sans Mono", style = "Bold" },
-  { family = "monospace" }
-]
-italic = [
-  { family = "JetBrains Mono", style = "Italic" },
-  { family = "Noto Sans Mono", style = "Italic" },
-  { family = "monospace" }
-]
+# Note: Alacritty uses system fontconfig for fallbacks
+# If IosevkaTerm is missing, it will automatically fallback to:
+# JetBrains Mono -> Noto Sans Mono -> system monospace
+
+# Official Flexoki Dark theme for Alacritty
+# https://github.com/kepano/flexoki/tree/main/alacritty
 
 [colors.primary]
-background = "0x1a1a1a"
-foreground = "0xe0e0e0"
+background = "0x282726"
+foreground = "0xFFFCF0"
+bright_foreground = "0xFFFCF0"
+dim_foreground = "0xFFFCF0"
+
+[colors.cursor]
+cursor = "0xFFFCF0"
+text = "0xFFFCF0"
+
+[colors.normal]
+black = "0x100F0F"
+red = "0xAF3029"
+green = "0x66800B"
+yellow = "0xAD8301"
+blue = "0x205EA6"
+magenta = "0xA02F6F"
+cyan = "0x24837B"
+white = "0xFFFCF0"
+
+[colors.bright]
+black = "0x100F0F"
+red = "0xD14D41"
+green = "0x879A39"
+yellow = "0xD0A215"
+blue = "0x4385BE"
+magenta = "0xCE5D97"
+cyan = "0x3AA99F"
+white = "0xFFFCF0"
+
+[colors.dim]
+black = "0x100F0F"
+red = "0xAF3029"
+green = "0x66800B"
+yellow = "0xAD8301"
+blue = "0x205EA6"
+magenta = "0xA02F6F"
+cyan = "0x24837B"
+white = "0xFFFCF0"
 
