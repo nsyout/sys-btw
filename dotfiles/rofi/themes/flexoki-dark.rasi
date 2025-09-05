@@ -51,7 +51,7 @@
 
 window {
     location:           center;
-    width:              40%;
+    width:              480;
     background-color:   @bg0;
     border:             1px;
     border-color:       @border-color;
@@ -82,7 +82,7 @@ textbox {
 
 listview {
     padding:    4px 0;
-    lines:      12;
+    lines:      8;
     columns:    1;
     fixed-height: false;
 }

@@ -29,111 +29,111 @@ notify_info() {
 }
 
 show_main_menu() {
-    echo "🎨 Appearance & Theming"
-    echo "⚙️  System Settings"
-    echo "🔌 Power Management"
-    echo "📱 Applications"
-    echo "🔧 Development Tools"
-    echo "📊 System Information"
-    echo "🔒 Security & Privacy"
-    echo "🌐 Network & Connectivity"
-    echo "📁 File Management" 
-    echo "❓ Help & About"
+    echo "Appearance & Theming"
+    echo "System Settings"
+    echo "Power Management"
+    echo "Applications"
+    echo "Development Tools"
+    echo "System Information"
+    echo "Security & Privacy"
+    echo "Network & Connectivity"
+    echo "File Management" 
+    echo "Help & About"
 }
 
 show_appearance_menu() {
-    echo "🖼️  Wallpaper Selector"
-    echo "🎨 Flexoki Theme Settings"
-    echo "🔤 Font Configuration"
-    echo "🖥️  Display Settings"
-    echo "🎭 Icon Themes"
-    echo "🌈 Color Picker"
-    echo "⬅️  Back to Main Menu"
+    echo "Wallpaper Selector"
+    echo "Flexoki Theme Settings"
+    echo "Font Configuration"
+    echo "Display Settings"
+    echo "Icon Themes"
+    echo "Color Picker"
+    echo "Back to Main Menu"
 }
 
 show_system_menu() {
-    echo "🔊 Audio Settings"
-    echo "📱 Bluetooth Management"
-    echo "🌐 Network Configuration"
-    echo "⌨️  Keyboard & Input"
-    echo "🖱️  Mouse & Touchpad"
-    echo "🕐 Date & Time"
-    echo "🌍 Locale & Language"
-    echo "⬅️  Back to Main Menu"
+    echo "Audio Settings"
+    echo "Bluetooth Management"
+    echo "Network Configuration"
+    echo "Keyboard & Input"
+    echo "Mouse & Touchpad"
+    echo "Date & Time"
+    echo "Locale & Language"
+    echo "Back to Main Menu"
 }
 
 show_power_menu() {
-    echo "🔒 Lock Screen"
-    echo "💤 Suspend"
-    echo "🔄 Restart"
-    echo "⚡ Shutdown"
-    echo "🚪 Log Out"
-    echo "🔋 Power Profile"
-    echo "⬅️  Back to Main Menu"
+    echo "Lock Screen"
+    echo "Suspend"
+    echo "Restart"
+    echo "Shutdown"
+    echo "Log Out"
+    echo "Power Profile"
+    echo "Back to Main Menu"
 }
 
 show_apps_menu() {
-    echo "📝 Text Editors"
-    echo "🌐 Web Browsers"
-    echo "📁 File Managers"
-    echo "🎵 Media Players"
-    echo "💬 Communication"
-    echo "🎮 Games"
-    echo "📷 Graphics & Photography"
-    echo "⬅️  Back to Main Menu"
+    echo "Text Editors"
+    echo "Web Browsers"
+    echo "File Managers"
+    echo "Media Players"
+    echo "Communication"
+    echo "Games"
+    echo "Graphics & Photography"
+    echo "Back to Main Menu"
 }
 
 show_dev_menu() {
-    echo "💻 Terminal"
-    echo "📝 Code Editors"
-    echo "🔧 Package Manager"
-    echo "🐙 Git Tools"
-    echo "🐳 Docker"
-    echo "📦 Node.js Tools"
-    echo "🐍 Python Tools"
-    echo "🦀 Rust Tools"
-    echo "⬅️  Back to Main Menu"
+    echo "Terminal"
+    echo "Code Editors"
+    echo "Package Manager"
+    echo "Git Tools"
+    echo "Docker"
+    echo "Node.js Tools"
+    echo "Python Tools"
+    echo "Rust Tools"
+    echo "Back to Main Menu"
 }
 
 show_info_menu() {
-    echo "💻 System Information"
-    echo "📊 Resource Monitor"
-    echo "🌡️  Temperature Monitor"
-    echo "💾 Disk Usage"
-    echo "🔌 Hardware Info"
-    echo "📡 Network Status"
-    echo "📋 Clipboard History"
-    echo "⬅️  Back to Main Menu"
+    echo "System Information"
+    echo "Resource Monitor"
+    echo "Temperature Monitor"
+    echo "Disk Usage"
+    echo "Hardware Info"
+    echo "Network Status"
+    echo "Clipboard History"
+    echo "Back to Main Menu"
 }
 
 show_security_menu() {
-    echo "🔒 SSH Key Management"
-    echo "🔐 Password Manager"
-    echo "🛡️  Firewall Status"
-    echo "🚫 Fail2ban Status"
-    echo "🔗 Tailscale Status"
-    echo "🔍 Security Scan"
-    echo "⬅️  Back to Main Menu"
+    echo "SSH Key Management"
+    echo "Password Manager"
+    echo "Firewall Status"
+    echo "Fail2ban Status"
+    echo "Tailscale Status"
+    echo "Security Scan"
+    echo "Back to Main Menu"
 }
 
 show_network_menu() {
-    echo "📶 WiFi Networks"
-    echo "🔗 Ethernet Settings"
-    echo "🌐 DNS Configuration"
-    echo "🔒 VPN Connections"
-    echo "🚪 Port Scanner"
-    echo "📊 Network Monitor"
-    echo "⬅️  Back to Main Menu"
+    echo "WiFi Networks"
+    echo "Ethernet Settings"
+    echo "DNS Configuration"
+    echo "VPN Connections"
+    echo "Port Scanner"
+    echo "Network Monitor"
+    echo "Back to Main Menu"
 }
 
 show_file_menu() {
-    echo "📁 File Manager (Yazi)"
-    echo "🔍 File Search"
-    echo "📋 Recent Files"
-    echo "🗑️  Trash Management"
-    echo "💾 Disk Analyzer"
-    echo "🔄 Sync & Backup"
-    echo "⬅️  Back to Main Menu"
+    echo "File Manager (Yazi)"
+    echo "File Search"
+    echo "Recent Files"
+    echo "Trash Management"
+    echo "Disk Analyzer"
+    echo "Sync & Backup"
+    echo "Back to Main Menu"
 }
 
 # Appearance functions
@@ -283,57 +283,57 @@ handle_file_search() {
 handle_menu_choice() {
     local choice="$1"
     case "$choice" in
-        "🎨 Appearance & Theming")
+        "Appearance & Theming")
             local subchoice
             subchoice=$(show_appearance_menu | rofi -dmenu -i -p "Appearance:")
             case "$subchoice" in
-                "🖼️  Wallpaper Selector") handle_wallpaper ;;
-                "🖥️  Display Settings") handle_display_settings ;;
-                "🌈 Color Picker") handle_color_picker ;;
-                "⬅️  Back to Main Menu") main ;;
+                "Wallpaper Selector") handle_wallpaper ;;
+                "Display Settings") handle_display_settings ;;
+                "Color Picker") handle_color_picker ;;
+                "Back to Main Menu") main ;;
             esac
             ;;
-        "🔌 Power Management")
+        "Power Management")
             local subchoice
             subchoice=$(show_power_menu | rofi -dmenu -i -p "Power:")
             case "$subchoice" in
-                "🔒 Lock Screen") handle_lock ;;
-                "💤 Suspend") handle_suspend ;;
-                "🔄 Restart") handle_restart ;;
-                "⚡ Shutdown") handle_shutdown ;;
-                "🚪 Log Out") handle_logout ;;
-                "⬅️  Back to Main Menu") main ;;
+                "Lock Screen") handle_lock ;;
+                "Suspend") handle_suspend ;;
+                "Restart") handle_restart ;;
+                "Shutdown") handle_shutdown ;;
+                "Log Out") handle_logout ;;
+                "Back to Main Menu") main ;;
             esac
             ;;
-        "📊 System Information")
+        "System Information")
             local subchoice
             subchoice=$(show_info_menu | rofi -dmenu -i -p "System Info:")
             case "$subchoice" in
-                "💻 System Information") handle_system_info ;;
-                "📊 Resource Monitor") handle_resource_monitor ;;
-                "💾 Disk Usage") handle_disk_usage ;;
-                "⬅️  Back to Main Menu") main ;;
+                "System Information") handle_system_info ;;
+                "Resource Monitor") handle_resource_monitor ;;
+                "Disk Usage") handle_disk_usage ;;
+                "Back to Main Menu") main ;;
             esac
             ;;
-        "🌐 Network & Connectivity")
+        "Network & Connectivity")
             local subchoice
             subchoice=$(show_network_menu | rofi -dmenu -i -p "Network:")
             case "$subchoice" in
-                "📶 WiFi Networks") handle_wifi ;;
-                "🔗 Tailscale Status") handle_tailscale_status ;;
-                "⬅️  Back to Main Menu") main ;;
+                "WiFi Networks") handle_wifi ;;
+                "Tailscale Status") handle_tailscale_status ;;
+                "Back to Main Menu") main ;;
             esac
             ;;
-        "📁 File Management")
+        "File Management")
             local subchoice
             subchoice=$(show_file_menu | rofi -dmenu -i -p "Files:")
             case "$subchoice" in
-                "📁 File Manager (Yazi)") handle_file_manager ;;
-                "🔍 File Search") handle_file_search ;;
-                "⬅️  Back to Main Menu") main ;;
+                "File Manager (Yazi)") handle_file_manager ;;
+                "File Search") handle_file_search ;;
+                "Back to Main Menu") main ;;
             esac
             ;;
-        "❓ Help & About")
+        "Help & About")
             echo -e "System Menu v1.0\nRofi-based system management\nInspired by Omarchy Walker\n\nKeybinds:\nSuper+D - App Launcher\nSuper+Alt+Space - System Menu" | \
                 rofi -dmenu -p "About:"
             ;;
