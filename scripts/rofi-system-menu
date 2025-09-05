@@ -285,7 +285,7 @@ handle_menu_choice() {
     case "$choice" in
         "Appearance & Theming")
             local subchoice
-            subchoice=$(show_appearance_menu | rofi -dmenu -i -p "Appearance:")
+            subchoice=$(show_appearance_menu | rofi -dmenu -i -theme ~/.config/rofi/themes/flexoki-dark.rasi -p "Appearance:")
             case "$subchoice" in
                 "Wallpaper Selector") handle_wallpaper ;;
                 "Display Settings") handle_display_settings ;;
@@ -295,7 +295,7 @@ handle_menu_choice() {
             ;;
         "Power Management")
             local subchoice
-            subchoice=$(show_power_menu | rofi -dmenu -i -p "Power:")
+            subchoice=$(show_power_menu | rofi -dmenu -i -theme ~/.config/rofi/themes/flexoki-dark.rasi -p "Power:")
             case "$subchoice" in
                 "Lock Screen") handle_lock ;;
                 "Suspend") handle_suspend ;;
@@ -307,7 +307,7 @@ handle_menu_choice() {
             ;;
         "System Information")
             local subchoice
-            subchoice=$(show_info_menu | rofi -dmenu -i -p "System Info:")
+            subchoice=$(show_info_menu | rofi -dmenu -i -theme ~/.config/rofi/themes/flexoki-dark.rasi -p "System Info:")
             case "$subchoice" in
                 "System Information") handle_system_info ;;
                 "Resource Monitor") handle_resource_monitor ;;
@@ -317,7 +317,7 @@ handle_menu_choice() {
             ;;
         "Network & Connectivity")
             local subchoice
-            subchoice=$(show_network_menu | rofi -dmenu -i -p "Network:")
+            subchoice=$(show_network_menu | rofi -dmenu -i -theme ~/.config/rofi/themes/flexoki-dark.rasi -p "Network:")
             case "$subchoice" in
                 "WiFi Networks") handle_wifi ;;
                 "Tailscale Status") handle_tailscale_status ;;
@@ -326,7 +326,7 @@ handle_menu_choice() {
             ;;
         "File Management")
             local subchoice
-            subchoice=$(show_file_menu | rofi -dmenu -i -p "Files:")
+            subchoice=$(show_file_menu | rofi -dmenu -i -theme ~/.config/rofi/themes/flexoki-dark.rasi -p "Files:")
             case "$subchoice" in
                 "File Manager (Yazi)") handle_file_manager ;;
                 "File Search") handle_file_search ;;
@@ -335,14 +335,14 @@ handle_menu_choice() {
             ;;
         "Help & About")
             echo -e "System Menu v1.0\nRofi-based system management\nInspired by Omarchy Walker\n\nKeybinds:\nSuper+D - App Launcher\nSuper+Alt+Space - System Menu" | \
-                rofi -dmenu -p "About:"
+                rofi -dmenu -theme ~/.config/rofi/themes/flexoki-dark.rasi -p "About:"
             ;;
     esac
 }
 
 main() {
     local choice
-    choice=$(show_main_menu | rofi -dmenu -i -p "System Menu:")
+    choice=$(show_main_menu | rofi -dmenu -i -theme ~/.config/rofi/themes/flexoki-dark.rasi -p "System Menu:")
     
     if [ -n "$choice" ]; then
         handle_menu_choice "$choice"
@@ -355,7 +355,7 @@ case "${1:-}" in
         handle_wallpaper
         ;;
     --power)
-        show_power_menu | rofi -dmenu -i -p "Power:"
+        show_power_menu | rofi -dmenu -i -theme ~/.config/rofi/themes/flexoki-dark.rasi -p "Power:"
         ;;
     *)
         main
