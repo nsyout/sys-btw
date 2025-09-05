@@ -43,8 +43,12 @@
 }
 
 window#waybar {
-  background: @base-950;
+  background: rgba(28, 27, 26, 0.95);
   color: @base-200;
+  border-radius: 0;
+  border: none;
+  margin: 0;
+  padding: 4px 8px;
 }
 
 #workspaces button {
@@ -56,6 +60,26 @@ window#waybar {
 #workspaces button.focused {
   background: @orange-600;
   color: @paper;
+}
+
+/* Module styling for better readability */
+#clock, #pulseaudio, #network, #bluetooth, #battery, #tray {
+  background: rgba(64, 62, 60, 0.8);
+  color: @base-200;
+  padding: 4px 12px;
+  margin: 0 2px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+#clock {
+  background: rgba(188, 82, 21, 0.8);
+  color: @paper;
+}
+
+#pulseaudio:hover, #network:hover, #bluetooth:hover, #battery:hover {
+  background: rgba(64, 62, 60, 0.9);
+  transition: all 0.3s ease;
 }
 
 #workspaces button:hover {
