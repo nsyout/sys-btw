@@ -1,0 +1,31 @@
+/* Minimal dark theme inspired by Flexoki */
+* {
+  accent:               #e6b673;
+  background:           #1a1a1a;
+  background-alt:       #222222;
+  foreground:           #e0e0e0;
+  foreground-dim:       #c8c8c8;
+  border-color:         #343434;
+  selected-background:  #2a2a2a;
+  selected-foreground:  @foreground;
+  urgent:               #e05f5f;
+  font:                 "Inter 12, Noto Sans 12, sans-serif 12";
+}
+
+window {
+  border: 1px;
+  border-color: @border-color;
+  background-color: @background;
+}
+
+mainbox { padding: 10px; }
+inputbar { padding: 6px 8px; background-color: @background-alt; }
+entry    { expand: true; }
+prompt   { margin: 0 6px 0 0; }
+listview { padding: 6px 0; spacing: 4px; }
+element  { padding: 6px 8px; }
+element-text  { foreground: @foreground; }
+element-icon  { size: 18px; }
+element selected { background-color: @selected-background; }
+element urgent   { foreground: @urgent; }
+

@@ -1,0 +1,5 @@
+* { font-family: "Inter", "Noto Sans", "system-ui", sans-serif; font-size: 12px; }
+window#waybar { background: rgba(22,22,26,0.7); color: #ddd; }
+#workspaces button.focused { background: #444; color: #fff; }
+#tray, #clock, #battery, #network, #pulseaudio, #bluetooth { padding: 0 8px; }
+

@@ -1,0 +1,44 @@
+[env]
+TERM = "xterm-256color"
+
+[window]
+dynamic_title = true
+decorations = "full"
+opacity = 0.97
+
+[font]
+size = 12.0
+
+[font.normal]
+family = "IosevkaTerm Nerd Font"
+style = "Medium"
+
+[font.bold]
+family = "IosevkaTerm Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "IosevkaTerm Nerd Font"
+style = "Italic"
+
+[font.fallback]
+normal = [
+  { family = "JetBrains Mono", style = "Regular" },
+  { family = "Noto Sans Mono", style = "Regular" },
+  { family = "monospace" }
+]
+bold = [
+  { family = "JetBrains Mono", style = "Bold" },
+  { family = "Noto Sans Mono", style = "Bold" },
+  { family = "monospace" }
+]
+italic = [
+  { family = "JetBrains Mono", style = "Italic" },
+  { family = "Noto Sans Mono", style = "Italic" },
+  { family = "monospace" }
+]
+
+[colors.primary]
+background = "0x1a1a1a"
+foreground = "0xe0e0e0"
+

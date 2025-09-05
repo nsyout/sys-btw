@@ -1,0 +1,37 @@
+# Claude Code files
+.claude/
+CLAUDE.md.bak
+*.claude
+claude-*
+*claude*
+.claude_*
+
+# Backup files created by link.sh
+*.bak
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*~
+.#*
+\#*#
+
+# Log files
+*.log
+
+# Local environment files
+.env
+.env.local
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Cache directories
+__pycache__/
+*.pyc
